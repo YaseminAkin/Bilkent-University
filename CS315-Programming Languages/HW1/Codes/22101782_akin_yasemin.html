@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    // 22101782_akin_yasemin.js
+
+    // Boolean expressions in JavaScript
+
+    // 1. Boolean operators
+    let a = true;
+    let b = false;
+    console.log(`a = ${a}`);
+    console.log(`b = ${b}`);
+
+    console.log("1. Boolean operators in JavaScript:");
+    console.log(`AND '&&' (a && b): ${a && b}`); // false
+    console.log(`OR '||' (a || b): ${a || b}`); // true
+    console.log(`NOT '!' (!a): ${!a}`); // false
+
+    // 2. Data types for operands of boolean operators, Boolean values (Truthy and Falsy values)
+    console.log(
+      "\n2. Data types for operands of boolean operators, Boolean values (Truthy and Falsy values) in JavaScript: JavaScript has 'truthy' and 'falsy' values."
+    );
+    // Demonstrating Truthy and Falsy Values in JavaScript
+
+    // Falsy Values
+    console.log(!!false); // false ('falsy' value)
+    console.log(!!0); // false ('falsy' value)
+    console.log(!!-0); // false ('falsy' value)
+    console.log(!!0n); // false ('falsy' value)
+    console.log(!!""); // false ('falsy' value)
+    console.log(!!null); // false ('falsy' value)
+    console.log(!!undefined); // false ('falsy' value)
+    console.log(!!NaN); // false ('falsy' value)
+
+    // Truthy Values
+    console.log(!!"0"); // true ('truthy' value)
+    console.log(!!"false"); // true ('truthy' value)
+    console.log(!![]); // true ('truthy' value)
+    console.log(!!{}); // true ('truthy' value)
+    console.log(!!function () {}); // true ('truthy' value)
+    console.log(!!42); // true ('truthy' value)
+
+    // 3. Operator precedence rules
+    console.log("\n3. Operator precedence rules in JavaScript: ! > && > ||");
+    let c = false;
+    console.log(`a || b && !c: ${a || (b && !c)}`); // Equivalent to a || (b && (!c))
+
+    let d = true;
+    console.log(`a || b === c && d != a: ${a || (b === c && d != a)}`); // Equivalent to (a || ((b === c) && (d != a)))
+
+    console.log(
+      `!a && b || c === d && d != a: ${(!a && b) || (c === d && d != a)}`
+    ); // Equivalent to ((!a) && b) || ((c === d) && (d != a))
+
+    // 4. Operator associativity rules
+    console.log(
+      "\n4. Operator associativity rules in JavaScript: left-associative"
+    );
+    console.log(`a && b && c && d: ${a && b && c && d}`); // Evaluates as (((a && b) && c) && d)
+
+    let x = 0;
+    let y = 1;
+    console.log(`x > y || y > x || y === x: ${x > y || y > x || y === x}`); // Evaluates as ((x > y || y > x) || y === x)
+
+    // 5. Operand evaluation order
+    console.log("\n4. Operand evaluation order in JavaScript: left-to-right");
+    function firstMethod() {
+      console.log("First method called");
+      return true;
+    }
+
+    function secondMethod() {
+      console.log("Second method called");
+      return false;
+    }
+
+    firstMethod() && secondMethod(); // Output: "First method called" then "Second method called"
+    firstMethod() || secondMethod(); // Output: "First method called"
+
+    // 6. Short-circuit evaluation
+    console.log("\n6. Short-circuit evaluation:");
+    // JavaScript uses short-circuit evaluation for && and ||.
+
+    // For &&, if the first operand is false, the second operand is not evaluated.
+    console.log(false && secondMethod()); // "Second method called" is not printed
+
+    // For ||, if the first operand is true, the second operand is not evaluated.
+    console.log(true || secondMethod()); // "Second method called" is not printed
+
+    let result = b && (a || check());
+    console.log(`Result of b && (a || check()): ${result}`); // check() is not called
+
+    function check() {
+      console.log("check() function called");
+      return true;
+    }
+  </script>
+</html>

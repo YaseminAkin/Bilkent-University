@@ -1,0 +1,16 @@
+#Test Program 2: Demonstrating Loops and Data Structures
+function main() {
+	total = 0;
+	numbers ::= [1, 2, 3, 4, 5];
+
+	for (i = 0; (i < 5); i++) {
+		num = numbers[i];
+   		total = total + num;
+	}
+	output total
+	while ((total > 0)) {
+		output total
+    		total = total - 3;
+	}
+	return 0;
+}

@@ -1,0 +1,17 @@
+#Program 1:
+function main() {
+	do {
+		output "Enter x: ";
+		input x;
+		output "Enter y: ";
+		input y
+		output "Enter z: ";
+		input z;	
+		if ((x == 0) || (y == 0) || (z == 0)) then {
+			output "Please enter non-zero values for x, y, and z.";
+		}
+	} while ((x != 0) && (y != 0) && (z != 0))
+   	result = " " x * y * z;
+    	output result;
+    	return result;
+}

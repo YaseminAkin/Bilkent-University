@@ -1,0 +1,28 @@
+#Program 2:
+function foo(p, q) {
+	output "Function Name: foo";
+	output p;
+	output q;
+	if ((p > q)) then {
+		max = "" p;
+	} 
+	else {
+        	max = q;
+   	}
+	return max;
+}
+function main() {
+	listA ::= [5, 0, 3, -7];
+	listB ::= [9, a, -1];
+	for (i = 0; i < 4; i++) {
+		a = listA[i];
+		for (j = 0; (j < 3); j++) {
+			b = listB[j];
+			c = foo(a, b);
+			output a;
+			output b;
+			output c;
+		}
+	}
+	return 0;
+}

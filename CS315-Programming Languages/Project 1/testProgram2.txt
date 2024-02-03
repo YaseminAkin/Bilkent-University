@@ -1,0 +1,18 @@
+#Test Program 2: Demonstrating Loops and Data Structures
+
+function intreturn main() {
+	int i;
+	int total = 0;
+	int[] numbers = [1, 2, 3, 4, 5];
+
+	for (i = 0; i < 5; i++) {
+   		total = total + numbers[i];
+	}
+
+	output("The sum of the numbers is: " + total);
+	while (total > 0) {
+		output("Countdown: " + total);
+    		total = total - 3;
+	}
+	returns 0;
+}

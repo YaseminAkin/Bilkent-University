@@ -1,0 +1,158 @@
+﻿CS224 / Lab No.: 7 
+Sec No.: 6
+Yasemin Akın
+22101782
+
+
+Lab 7 Preliminary Design Report
+29 May 2023
+
+
+Part1-a)
+
+
+Pushbutton Switches: j port → The Beti training board's J port is where the buttons are connected.
+
+
+* TRISj: TRIS register for port j. Generally, TRISx registers are used to configure data direction flow through port I/O pins. The register’s bits are used to determine whether a port I/O pin is an output or an input. Therefore, the port pins' direction is configured using this SFR. To make the desired pins inputs, TRISj should be set appropriately.
+
+
+* PORTj: PORT register for port j. Generally, PORTx registers are used to read I/O pins. Therefore, to read the input value of the port pins, use this SFR. To find out the status of the pushbutton switches, PORTj should be read.
+
+
+DC Motor: k port → The K port on the Beti training board is where the DC motor is connected.
+
+
+* TRISk: TRIS register for port k. Generally, TRISx registers are used to configure data direction flow through port I/O pins. The register’s bits are used to determine whether a port I/O pin is an output or an input. Therefore, the port pins' direction is configured using this SFR. To make the desired pins outputs, TRISk should be set correctly.
+
+
+* LATk: LAT register for port k. Generally, LATx registers are used to hold data in the port I/O pins. They are usually called “PORT data latch”. Therefore, the output value of the port pins is set using this SFR. I should put LATk to regulate the DC motor's direction.
+
+
+Part1-b)
+
+
+/*
+ * DC Motor Control Program
+ * This program uses two pushbutton switches on the Beti training board to control the direction of a DC motor.
+ * When button0 is pressed, the motor rotates counterclockwise.
+ * When button1 is pressed, the motor rotates clockwise.
+ * If both buttons are pressed or no buttons are pressed, the motor is stopped.
+ */
+
+
+// Define constants for button states
+#define BUTTON0 0x01  // Value indicating Button 0 state
+#define BUTTON1 0x02  // Value indicating Button 1 state
+
+
+// Define special function register (SFR) addresses
+#define TRISJ (*(int *)0xF93)  // TRISJ register address for configuring Port J pins as inputs
+#define PORTJ (*(int *)0xF97)  // PORTJ register address for reading the state of Port J pins
+#define TRISK (*(int *)0xF94)  // TRISK register address for configuring Port K pins as outputs
+#define LATK (*(int *)0xF8A)   // LATK register address for controlling the output of Port K pins
+
+
+int main() {
+    // Configure Port J pins as inputs for pushbutton switches
+    TRISJ = 0xFF;
+
+
+    // Configure Port K pins as outputs for controlling the DC motor
+    TRISK = 0x00;
+
+
+    while (1) {
+        // Read the state of the buttons
+        int button0 = PORTJ & BUTTON0;  // Check if Button 0 is pressed
+        int button1 = PORTJ & BUTTON1;  // Check if Button 1 is pressed
+
+
+        // Control the DC motor based on button states
+        if (button0 && !button1) {
+            // Button 0 is pressed, rotate counterclockwise
+            LATK = 0x01;  // Set Port K output to rotate counterclockwise
+        } else if (!button0 && button1) {
+            // Button 1 is pressed, rotate clockwise
+            LATK = 0x02;  // Set Port K output to rotate clockwise
+        } else {
+            // Both buttons are pressed or no buttons are pressed, stop the motor
+            LATK = 0x00;  // Set Port K output to stop the motor
+        }
+    }
+
+
+    return 0;
+}
+
+
+Part1-c)
+
+
+Seven-Segment Display: port a → The Beti board's A port is where the seven-segment display is connected.
+
+
+* TRISa: TRIS register for port a. Generally, TRISx registers are used to configure data direction flow through port I/O pins. The register’s bits are used to determine whether a port I/O pin is an output or an input. Therefore, the port pins' direction is configured using this SFR. To make all of the pins on port a outputs, TRISa should be set to 0x00.
+
+
+* PORTa: PORT register for port a. Generally, PORTx registers are used to read I/O pins. Therefore, the output value of the port pins is set using this SFR. PORTA should be set to have the seven-segment display show the appropriate digit.
+
+
+Part1-d)
+
+
+/*
+ * Seven-Segment Display Function Display Program
+ * This program displays f(x) = x^3 values on a 4-digit seven-segment display (SSD) connected to the Beti board.
+ */
+
+
+#include <stdio.h>
+
+
+// Hexadecimal values for digits in seven segment
+const int binary_pattern[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+
+
+int main() {
+    // Configure AN pins as digital I/O
+    int AD1PCFG = 0xFFFF;
+
+
+    // Disable JTAG
+    int JTAGEN_bit = 0;
+
+
+    // Configure SSD
+    int TRISA = 0x00;  // PortA is output to D
+    int TRISE = 0x00;  // PortE is output to AN
+
+
+    while (1) {
+        // Display f(x) = x^3 values on the SSD
+        for (int x = 1; x < 22; x++) {
+            int cube = x * x * x;  // Calculate the cube of x
+
+
+            // Display the current value of f(x) = x^3
+            PORTA = binary_pattern[cube % 10];         // Units digit
+            PORTE = 0x01;                               // Open the first digit
+            Delay_ms(1000);
+
+
+            PORTA = binary_pattern[(cube / 10) % 10];   // Tens digit
+            PORTE = 0x02;                               // Open the second digit
+            Delay_ms(1000);
+
+
+            // Check if the last number is displayed
+            if (x == 21) {
+                // Restart the sequence from the first number
+                x = 0;
+            }
+        }
+    }
+
+
+    return 0;
+}

@@ -1,0 +1,184 @@
+CS224
+Recitation 3
+Section 6
+Yasemin Akın
+22101782
+27 March 2023	
+
+Q2
+
+		.data
+dividend_p:	.asciiz "Enter dividend: "
+divisor_p:	.asciiz "Enter divisor: "
+negative_p:	.asciiz "Entered integer can not be negative! Quitting..."
+quotient_p:	.asciiz "quotient = "
+remainder_p:	.asciiz "remainder = "
+		
+		.text 
+Main:
+#get dividend input and put it in $a0
+	la	$a0, dividend_p
+	li	$v0, 4
+	syscall
+	li 	$v0, 5         
+    	syscall           
+    	move 	$a0, $v0 
+    	blt	$a0, 0, negative
+#get dividend input and put it in $a0
+    	la	$a0, divisor_p
+	li	$v0, 4
+	syscall
+	li 	$v0, 5         
+    	syscall           
+    	move 	$a1, $v0 
+    	blt	$a0, 0, negative
+    	
+    	jal	recursiveDivision
+    	move	$t0, $a0
+    	move	$t1, $a1
+    	
+    	la	$a0, quotient_p
+	li	$v0, 4
+	syscall
+	move	$a0, $t0
+	li 	$v0, 1
+	syscall
+	
+	la	$a0, remainder_p
+	li	$v0, 4
+	syscall
+	move	$a0, $t1
+	li 	$v0, 1
+	syscall
+	
+    	li 	$v0, 10
+    	syscall
+   
+negative:
+	
+	la	$a0, negative_p
+	li	$v0, 4
+	syscall
+	li 	$v0, 10
+    	syscall
+
+recursiveDivision:
+
+    	blt	$a0, $a1, end
+    	sub 	$a0, $a0, $a1    
+    	jal 	recursiveDivision  
+    	addi 	$a0, $v0, 1     
+    	move 	$a1, $v1        
+    	jr 	$ra              
+
+end:
+
+	move 	$a1, $a0  
+    	li 	$a0, 0           
+    	jr 	$ra  
+
+Q3
+
+	.text
+	
+CopyAllExcept_x:
+
+    	move 	$s0, $a0           
+    	li 	$s1, 0               
+    	li 	$s2, 0               
+    
+for1:
+
+        lw 	$s3, ($s0)       
+        beq 	$s3, $s1, go   
+        lw 	$s4, 4($s0)      
+        addi 	$sp, $sp, -8       
+    	sw 	$a0, 0($sp)          
+    	sw 	$a1, 4($sp)          
+    	move 	$v0, $sp           
+    	addi 	$sp, $sp, 8         
+        sw 	$v0, 4($s2)      
+        move 	$s2, $s0       
+        addi 	$s1, $s1, 1    
+
+go:
+
+        lw 	$s0, 4($s0)      
+        bne 	$s0, 0, for1
+    	sw 	$zero, 4($s2)
+    	lw 	$v0, 4($s2)         
+    	move 	$v1, $s1           
+    	jr 	$ra                 
+
+Q1
+
+		.data
+regNum_p:	.asciiz "Enter register number: "
+outOfBounds_p:	.asciiz "There is no such register number."
+
+		.text
+Main:
+
+		la	$a0, regNum_p
+		li	$v0, 4
+		syscall
+    		li 	$v0, 5         
+    		syscall           
+    		move 	$a0, $v0    
+    		blt 	$a0, 1, outOfBound
+    		bgt	$a0, 31, outOfBound
+
+		la 	$a1, givenProgram
+   		li	$a2, 0
+   		jal	givenProgram
+  
+    		jal 	RegisterCount   
+    		move 	$t0, $v0               
+    		li 	$v0, 1         
+    		move 	$a0, $t0     
+    		syscall          
+    		
+    		li 	$v0, 10        
+    		syscall           
+RegisterCount:
+
+		li	$s0, 0
+		li	$s1, 0
+
+for1:
+
+		bgt	$s1, $a2, end
+    		lw 	$s3, 0($a1)       
+    		addi 	$a1, $a1, 4     
+    		addi 	$s1, $s1, 1  
+    		  
+    		andi 	$s2, $s3, 0x03E00000   
+    		srl 	$s2, $s2, 21 
+    		          
+    		beq 	$s2, $a0, count  
+    		   
+    		j 	for1          
+
+end:
+		move	$v0, $s0
+    		jr 	$ra   
+
+
+count:
+
+    		addi 	$s0, $s0, 1  
+    		j 	for1
+   
+givenProgram:
+#paste given subprogram here
+    		jr $ra
+    		
+outOfBound:	
+	
+		la	$a0, outOfBounds_p
+		li	$v0, 4
+		syscall
+    		li 	$v0, 10       
+    		syscall
+
+     

@@ -1,0 +1,93 @@
+//CS224
+//Lab 7
+//Section 6
+//Ömer Amir Akdağ
+//22102918
+//Yasemin Akın
+//22101782
+
+void main() {
+ AD1PCFG = 0xFFFF;
+ DDPCON.JTAGEN = 0; // disable JTAG
+
+ TRISA = 0x0000; //portA is used as an output (for DC Motor)
+ PORTA = 0Xffff;
+
+
+ TRISE = 0xFFFF; //portE is used as an input (for push buttons)
+ PORTE = 0X0000;
+
+ while(1) {
+
+  PORTAbits.RA1 = PORTEbits.RE0;;
+  PORTAbits.RA2 = PORTEbits.RE1;
+ }
+}
+
+
+/*
+Configuration for the code below:
+
+Connect portA to J1 Port of 4 Digit Seven Segment Module
+Jumpers of portA are: 5V, pull down ( top one to left, other to right )
+
+Connect portE to J2 Port of 4 Digit Seven Segment Module
+Jumpers of portE are: 5V, pull down ( top one to left, other to right )
+
+*/
+
+// Hexadecimal values for digits in 7 segment
+unsigned char binary_pattern[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+unsigned int x = 0;
+unsigned int f;
+unsigned int  f1,f2,f3,f4;
+unsigned int count = 0;
+
+void main() {
+    AD1PCFG = 0xFFFF; // Configure AN pins as digital I/O
+    JTAGEN_bit = 0;   // Disable JTAG
+    TRISA = 0x00; // portA is output to D
+    TRISE = 0x00; // portE is output to AN
+
+    while (1) {
+        // Calculate f(x) = x^3
+       f = x * x * x;
+
+        f1 = f%10;
+        f = f/10;
+        f2 = f%10;
+        f = f/10;
+
+        f3 = f%10;
+        f= f/10;
+
+        f4 = f%10;
+        f = f/10;
+
+
+        while(count<500){
+            PORTA = binary_pattern[n1];
+
+            PORTE = 0x01;
+            Delay_ms(1);
+
+            PORTA = binary_pattern[n2];
+
+            PORTE = 0x02;
+            Delay_ms(1);
+
+            PORTA = binary_pattern[n3];
+            PORTE = 0x04;
+            Delay_ms(1);
+
+            PORTA = binary_pattern[n4];
+            PORTE = 0x08;
+            Delay_ms(1);
+            count++;
+          }
+        x++;
+        if (x > 21) {
+            x = 1;
+        }
+    }
+} // main

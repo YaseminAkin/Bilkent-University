@@ -1,0 +1,128 @@
+CS224 
+Recitation 2 
+Section 6 
+Yasemin Akın
+22101782
+13 March 2023
+
+		.data 
+arr1:		.asciiz	"Entries for Array 1 has started\n"
+arr2:		.asciiz	"Entries for Array 2 has started\n"
+initArr_p:	.asciiz "Enter an array element: "
+arr1End_p:	.asciiz	"Array 1 entries ended\n"
+arr2End_p:	.asciiz	"Array 2 entries ended\n"
+arr1_f:		.asciiz	"Array 1: "
+arr2_f:		.asciiz	"Array 2: "
+space:		.asciiz " "	
+line:		.asciiz "\n"
+hamming_p:	.asciiz	"\nHamming Distance = "
+		.text 
+Main:	
+	addi	$sp, $sp, -16
+	
+	li	$v0, 4			#1
+	la	$a0, arr1
+	syscall
+	jal 	CreateArray		
+	sw	$v0, 8($sp)
+	li	$v0, 4			
+	la	$a0, arr1End_p
+	syscall
+	
+	li	$v0, 4			#2
+	la	$a0, arr2
+	syscall
+	jal 	CreateArray		
+	sw	$v0, 12($sp)
+	li	$v0, 4			
+	la	$a0, arr2End_p
+	syscall	
+		
+	lw	$a1, 8($sp)
+	li	$v0, 4			
+	la	$a0, arr1_f
+	syscall
+	jal 	PrintArray		
+	lw	$a2, 8($sp)
+	li	$v0, 4			
+	la	$a0, line
+	syscall
+	lw	$a1, 12($sp)
+	li	$v0, 4			
+	la	$a0, arr2_f
+	syscall
+	jal 	PrintArray
+	lw	$a1, 12($sp)
+	
+	jal	CalculateDistance
+	
+	addi	$sp, $sp, 16
+#terminating the program
+	li	$v0, 10
+	syscall
+	
+CreateArray:
+	li	$a0, 20		#size of an array of 5 integers in bytes
+	li	$v0, 9		#allocating, base address of the dynamic array is in $v0
+	syscall
+	move	$s0, $v0
+	sw	$ra, 0($sp)
+	jal 	InitializeArray
+	lw	$ra, 0($sp)
+	move	$v0, $s0
+	jr 	$ra
+	
+InitializeArray:
+	li	$s1, 0	
+	sw	$s0, 4($sp)
+	for1:
+		li	$v0, 4
+		la	$a0, initArr_p
+		syscall
+		li	$v0, 5	#array value in $v0
+		syscall
+	#store in array
+		sw 	$v0, 0($s0)
+	#make $s0 point to the next element's address
+		addi 	$s0, $s0, 4
+		addi	$s1, $s1, 1
+	#check counter and loop or continue
+		blt 	$s1, 5, for1
+	lw	$s0, 4($sp)
+	jr	$ra		
+PrintArray:	
+	li	$s1, 0	
+	for2:
+		li	$v0, 1
+		lw	$a0, 0($a1)
+		syscall
+		li	$v0, 4	
+		la	$a0, space
+		syscall
+	#make $a1 point to the next element's address
+		addi 	$a1, $a1, 4
+		addi	$s1, $s1, 1
+	#check counter and loop or continue
+		blt 	$s1, 5, for2
+	jr	$ra		
+
+CalculateDistance:
+	li	$s1, 0
+	li	$s2, 0
+	for3:	
+		lw	$s3, 0($a2)
+		lw	$s5, 0($a1)
+		beq	$s3, $s5, noIncrement
+		addi 	$s2, $s2, 1
+		noIncrement:
+			addi 	$a2, $a2, 4
+			addi 	$a1, $a1, 4
+			addi 	$s1, $s1, 1
+		blt	$s1, 5, for3
+	li	$v0, 4			
+	la	$a0, hamming_p
+	syscall
+	li	$v0, 1
+	move	$a0, $s2
+	syscall
+	jr 	$ra

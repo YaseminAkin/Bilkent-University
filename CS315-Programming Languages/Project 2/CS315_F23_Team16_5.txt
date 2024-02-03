@@ -1,0 +1,18 @@
+#Test Program 3: Exercise Conditional Statements and Loops
+function main() {
+    num = 10;
+    i = 0;
+    while ((i < num)) {
+        if ((i % 2 == 0)) then {
+           output "Even";
+        } else {
+            output "Odd";
+        }
+        i = i + 1;
+    }
+    do {
+        output num;
+        num = num - 1;
+    } while ((num >= 0))
+    return 0;
+}

@@ -1,0 +1,32 @@
+#Program 2:
+
+function intreturn foo(int p, int q) {
+	output ("Function Name: foo");
+	output ("Parameter p is " + p);
+	output ("Parameter q is " + q);
+	if (p > q) then {
+		returns p;
+	} else {
+        	returns q;
+   	}
+}
+
+function intreturn main() {
+	int[][] listA = [[5, 0, 3, -7], [5, 0, 3, -7]];
+	int[] listB = [9, a, -1];
+	int a;
+	int b;
+	int c;
+
+	for (int i = 0; i < 4; i++) {
+		a = listA[i][j];
+		for (int j = 0; j < 3; j++) {
+			b = listB[j];
+			c = foo(a, b);
+			output ("a is " + a);
+			output ("b is " + b);
+			output ("c is " + c);
+		}
+	}
+	returns 0;
+}

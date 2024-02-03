@@ -1,0 +1,55 @@
+Grading
+
+Project 1 (with feedback): 
+
+Team 16: (82/100)
+Part A: (17/30)
+
+<keyword> you do not have to define something like that. Your tokens need to be connected
+to main program. Unconnected BNF -2
+
+Could you please add at least some punctuation to
+strings like dot, comma etc. 
+You do not have to add all but without all of it 
+they may be too hard to read. Readability -1
+
+What about operation precedence (both for arithmetic and logical expressions) -3
+
+<variable initialization> ::= <variable> <equal sign> <initialization right side> | <variable
+declaration>
+I think you meant <variable declaration or argument>? -1
+
+What does not operation do to integers? 
+Do not forget there are no booleans in this language, 
+so you need to explain properly -1
+
+With your design I cannot write else if, so I need to have nested ifs. Writability and readability issue -1
+
+Having void return is a reliability issue.
+You can do this but you should discuss it in your report and tell why you chose this. -1
+
+No n dimensional collections -1
+
+What if i want to make a collection of a mix of variables and constants? Writability -1
+
+No multiline comments. Writability -1
+
+Part B: (36/40)
+
+Your comment implementation is different than you described -2
+INTEGER [+-]?{DIGITS} This will cause problems in yacc -2
+
+Part C: (29/30)
+
+Could you add a more complex expression example
+with several operations and parantheses.
+These expressions are too simple. -1
+
+Project 2 (with feedback): 98
+
+Uncorrected from Previous Part: (-1)
+
+No n dimensional collections -1
+
+HW 1: 95
+HW 2: 100

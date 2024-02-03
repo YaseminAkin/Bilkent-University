@@ -1,0 +1,26 @@
+#Test Program 3: Exercise Conditional Statements and Loops
+
+function intreturn main() {
+    int num = 10;
+    int i = 0;
+
+    while (i < num) {
+        if (i % 2 == 0) then {
+           output ("Even number: " +  i);
+        } else {
+            output ("Odd number: " + i);
+        }
+        i = i + 1;
+    }
+
+    for (int j = 0; j < num; j = j + 2) {
+        output ("Multiples of 2: "+ j);
+    }
+
+    do {
+        output ("Countdown: " + num);
+        num = num - 1;
+    } while (num >= 0);
+
+    returns 0;
+}

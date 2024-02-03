@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    // 1
+    function outerFunction(outerVariable) {
+      function innerFunction(innerVariable) {
+        console.log(outerVariable, innerVariable);
+      }
+      return innerFunction;
+    }
+
+    const newFunction = outerFunction("outside");
+    newFunction("inside"); // Output: outside inside
+
+    //2
+    var globalVar = "Global";
+
+    function outerFunction2(outerParam) {
+      var outerVar = "Outer";
+
+      function innerFunction2() {
+        var innerVar = "Inner";
+        console.log(globalVar); // Accesses global variable
+        console.log(outerParam); // Accesses parameter of the outer function
+        console.log(outerVar); // Accesses variable from the outer function
+        console.log(innerVar); // Accesses variable from its own scope
+      }
+
+      innerFunction2();
+    }
+
+    outerFunction2("OuterParam");
+
+    //3
+    function createCounter() {
+      let count = 0;
+
+      return {
+        increment: function () {
+          count++;
+          console.log(count);
+        },
+        decrement: function () {
+          count--;
+          console.log(count);
+        },
+      };
+    }
+
+    let counter = createCounter();
+    counter.increment(); // Output: 1
+    counter.decrement(); // Output: 0
+
+    //4
+    function outerFunction3(outerVar) {
+      return function innerFunction3(innerVar) {
+        return function innermostFunction() {
+          console.log("Outer Variable:", outerVar);
+          console.log("Inner Variable:", innerVar);
+        };
+      };
+    }
+
+    const newFunction2 = outerFunction3("outer")("inner");
+    newFunction2(); // Outputs: Outer Variable: outer, Inner Variable: inner
+  </script>
+</html>

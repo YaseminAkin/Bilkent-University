@@ -1,0 +1,150 @@
+#Program 1:
+
+function intreturn main() {
+	int x;
+	int y;
+	int z;
+	do {
+		input prompt "Enter x: " put(x);
+		input prompt "Enter y: " put(y);
+		input prompt "Enter z: " put(z);
+
+		if ((x == 0) || (y == 0) || (z == 0)) then {
+			output ("Please enter non-zero values for x, y, and z.");
+		}
+
+	} while ((x != 0) && (y != 0) && (z != 0));
+
+   	int result = x * y * z;
+    	output ("Result: "+ result);
+    	returns result;
+}
+
+#Program 2:
+
+function intreturn foo(int p, int q) {
+	output ("Function Name: foo");
+	output ("Parameter p is " + p);
+	output ("Parameter q is " + q);
+	if (p > q) then {
+		returns p;
+	} else {
+        	returns q;
+   	}
+}
+
+function intreturn main() {
+	int[][] listA = [[5, 0, 3, -7], [5, 0, 3, -7]];
+	int[] listB = [9, a, -1];
+	int a;
+	int b;
+	int c;
+
+	for (int i = 0; i < 4; i++) {
+		a = listA[i][j];
+		for (int j = 0; j < 3; j++) {
+			b = listB[j];
+			c = foo(a, b);
+			output ("a is " + a);
+			output ("b is " + b);
+			output ("c is " + c);
+		}
+	}
+	returns 0;
+}
+
+#Test Program 1: Demonstrating Control Structures, Functions, and Complex Expressions
+
+function void printMessage(string message) {
+    output(message)
+}
+
+function intreturn calculateExpression(int a, int b, int c) {
+    int result;
+    result = (a * b) + (c / 2) - (a % b);
+    returns result;
+}
+
+function void checkNumbers(int x, int y) {
+    if (x > y) then {
+        printMessage("x is greater than y");
+    }
+    elseif (x < y) then {
+        printMessage("x is less than y");
+    }
+    else {
+        printMessage("x is equal to y");
+    }
+}
+
+function intreturn main() {
+    int num1;
+    int num2;
+    int num3;
+    int result;
+
+    input prompt "Enter the first number (num1): " put (num1);
+    input prompt "Enter the second number (num2): " put (num2);
+    input prompt "Enter the third number (num3): " put (num3);
+
+    result = calculateExpression(num1, num2, num3);
+
+    output("Result of the complex expression: " + result);
+
+    checkNumbers(num1, num2);
+
+    if (num3 != 0) then {
+        int quotient;
+        quotient = num1 / num3;
+        output("Quotient of num1 divided by num3: " + quotient);
+    }
+    else {
+        output("Cannot divide by zero. Exiting the program.");
+    }
+}
+
+#Test Program 2: Demonstrating Loops and Data Structures
+
+function intreturn main() {
+	int i;
+	int total = 0;
+	int[] numbers = [1, 2, 3, 4, 5];
+
+	for (i = 0; i < 5; i++) {
+   		total = total + numbers[i];
+	}
+
+	output("The sum of the numbers is: " + total);
+	while (total > 0) {
+		output("Countdown: " + total);
+    		total = total - 3;
+	}
+	returns 0;
+}
+
+#Test Program 3: Exercise Conditional Statements and Loops
+
+function intreturn main() {
+    int num = 10;
+    int i = 0;
+
+    while (i < num) {
+        if (i % 2 == 0) then {
+           output ("Even number: " +  i);
+        } else {
+            output ("Odd number: " + i);
+        }
+        i = i + 1;
+    }
+
+    for (int j = 0; j < num; j = j + 2) {
+        output ("Multiples of 2: "+ j);
+    }
+
+    do {
+        output ("Countdown: " + num);
+        num = num - 1;
+    } while (num >= 0);
+
+    returns 0;
+}

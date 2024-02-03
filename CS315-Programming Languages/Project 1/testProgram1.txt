@@ -1,0 +1,49 @@
+#Test Program 1: Demonstrating Control Structures, Functions, and Complex Expressions
+
+function void printMessage(string message) {
+    output(message)
+}
+
+function intreturn calculateExpression(int a, int b, int c) {
+    int result;
+    result = (a * b) + (c / 2) - (a % b);
+    returns result;
+}
+
+function void checkNumbers(int x, int y) {
+    if (x > y) then {
+        printMessage("x is greater than y");
+    }
+    elseif (x < y) then {
+        printMessage("x is less than y");
+    }
+    else {
+        printMessage("x is equal to y");
+    }
+}
+
+function intreturn main() {
+    int num1;
+    int num2;
+    int num3;
+    int result;
+
+    input prompt "Enter the first number (num1): " put (num1);
+    input prompt "Enter the second number (num2): " put (num2);
+    input prompt "Enter the third number (num3): " put (num3);
+
+    result = calculateExpression(num1, num2, num3);
+
+    output("Result of the complex expression: " + result);
+
+    checkNumbers(num1, num2);
+
+    if (num3 != 0) then {
+        int quotient;
+        quotient = num1 / num3;
+        output("Quotient of num1 divided by num3: " + quotient);
+    }
+    else {
+        output("Cannot divide by zero. Exiting the program.");
+    }
+}
