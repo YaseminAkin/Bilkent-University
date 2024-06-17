@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Transfer</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      .alert {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+      }
+      .alert-success { background-color: #48c774; }
+      .alert-info { background-color: #209cee; }
+      .alert-danger { background-color: #ff3860; }
+      h1, h2 {
+        color: #333;
+        text-align: center;
+      }
+      form {
+        background: white;
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 5px;
+      }
+      select, input[type=number] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #008CBA;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+      }
+      button:hover {
+        background-color: #005f73;
+      }
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #ddd;
+      }
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      .back-link {
+        display: inline-block;
+        text-decoration: none;
+        color: #2196F3;
+        font-size: 16px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+      }
+      .back-link:before {
+        content: '← ';
+      }
+      .logout-link {
+        background-color: #f44336;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        display: inline-block;
+        text-decoration: none;
+        margin-top: 20px;
+      }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('main_page') }}" class="back-link">Back to Main Page</a>
+    <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    <h1>Money Transfer</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          <div id="flash-messages">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+          </div>
+      {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('money_transfer') }}" method="post">
+        <label for="FromAccount">From Account:</label>
+        <select name="FromAccount" id="FromAccount">
+            {% for account in user_accounts %}
+            <option value="{{ account.aid }}">{{ account.aid }}</option>
+            {% endfor %}
+        </select>
+        <label for="ToAccount">To Account:</label>
+        <select name="ToAccount" id="ToAccount">
+            {% for account in all_accounts %}
+            <option value="{{ account.aid }}">{{ account.aid }}</option>
+            {% endfor %}
+        </select>
+        <label for="TransferAmount">Transfer Amount:</label>
+        <input type="number" name="TransferAmount" id="TransferAmount" step="0.01">
+
+        <button type="submit">Submit</button>
+    </form>
+    <h2>All Accounts Overview</h2>
+    <table>
+        <tr>
+            <th>Account ID</th>
+            <th>Branch</th>
+            <th>Balance</th>
+            <th>Open Date</th>
+        </tr>
+        {% for account in all_accounts %}
+        <tr>
+            <td>{{ account.aid }}</td>
+            <td>{{ account.branch }}</td>
+            <td>{{ account.balance }}</td>
+            <td>{{ account.openDate }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+    window.onload = function() {
+      setTimeout(function() {
+        var flashMessages = document.getElementById('flash-messages');
+        if (flashMessages) {
+          flashMessages.style.display = 'none';
+        }
+      }, 3000); // 3000 milliseconds = 3 seconds
+    };
+    </script>
+</body>
+</html>

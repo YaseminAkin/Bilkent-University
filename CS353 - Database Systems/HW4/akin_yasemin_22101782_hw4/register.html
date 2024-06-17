@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="text"], input[type="password"], input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0 20px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .btn {
+        background-color: #008CBA;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .btn:hover {
+        background-color: #005f73;
+      }
+      .alert {
+        padding: 10px;
+        background-color: #ff9800;
+        color: white;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        text-align: center;
+      }
+      form {
+        background: white;
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+    </style>
+</head>
+<body>
+    <form action="{{ url_for('register') }}" method="post">
+        {% if message is defined and message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <label for="password">Password (Customer ID):</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Customer ID">
+        </div>
+        <div class="form-group">
+            <label for="bdate">Birth Date:</label>
+            <input type="date" class="form-control" id="bdate" name="bdate">
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+        </div>
+        <div class="form-group">
+            <label for="nationality">Nationality:</label>
+            <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Enter nationality">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <form action="{{ url_for('login') }}" method="get" style="text-align: center;">
+        <button class="btn btn-primary">Login</button>
+    </form>
+</body>
+</html>

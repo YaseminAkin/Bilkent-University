@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Analysis</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #333;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    p {
+      color: #333;
+      text-align: left;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 8px 16px;
+      background-color: #008CBA;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: center;
+    }
+    a:hover {
+      background-color: #005f73;
+    }
+    .back-link, .logout-link {
+      background-color: #f44336; /* Red for logout to indicate a cautionary action */
+      margin-right: 10px;
+    }
+    .back-link:hover, .logout-link:hover {
+      background-color: #c1352d;
+    }
+    .links-container {
+      text-align: center; /* Centers the back and logout links */
+    }
+  </style>
+</head>
+<body>
+    <h1>Account Analysis Page</h1>
+
+    <h2>Accounts Overview</h2>
+    <table>
+    <tr>
+      <th>Account ID</th>
+      <th>Branch</th>
+      <th>Balance</th>
+      <th>Open Date</th>
+    </tr>
+    {% for account in accounts %}
+    <tr>
+      <td>{{ account.aid }}</td>
+      <td>{{ account.branch }}</td>
+      <td>{{ account.balance }}</td>
+      <td>{{ account.openDate }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Accounts with High Balances (Over 50,000)</h2>
+    <table>
+    <tr>
+      <th>Account ID</th>
+      <th>Balance</th>
+      <th>Open Date</th>
+    </tr>
+    {% for account in high_balance_accounts %}
+    <tr>
+      <td>{{ account.aid }}</td>
+      <td>{{ account.balance }}</td>
+      <td>{{ account.openDate }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Accounts in the Same City as the Customer</h2>
+    <table>
+    <tr>
+      <th>Account ID</th>
+      <th>Balance</th>
+    </tr>
+    {% for account in same_city_accounts %}
+    <tr>
+      <td>{{ account.aid }}</td>
+      <td>{{ account.balance }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Balance Range</h2>
+    <p>Maximum Balance: {{ balance_range.max_balance }}</p>
+    <p>Minimum Balance: {{ balance_range.min_balance }}</p>
+
+    <div class="links-container">
+    <a href="{{ url_for('main_page') }}" class="back-link">Back to Main Page</a>
+    <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    </div>
+</body>
+</html>
